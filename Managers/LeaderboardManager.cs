@@ -12,12 +12,11 @@ namespace BigTime.SDK.Managers
         private readonly ApiClient _apiClient;
         public LeaderboardManager(ApiClient client) { _apiClient = client; }
 
-        public Task<LeaderboardEntry> SubmitScoreAsync(int points, string category = "daily")
-        {
-            var payload = new { points, category };
-            return _apiClient.PostAsync<LeaderboardEntry>("leaderboard/scores/", payload);
-        }
+        // NOTE: The SubmitScoreAsync function has been moved to ScoreManager.
 
+        /// <summary>
+        /// Gets the top leaderboard entries for a given period.
+        /// </summary>
         public Task<Leaderboard> GetTopScoresAsync(LeaderboardPeriod period, int limit = 10, int offset = 0)
         {
             string periodString = period.ToString().ToLower();
@@ -25,6 +24,9 @@ namespace BigTime.SDK.Managers
             return _apiClient.GetAsync<Leaderboard>(endpoint);
         }
 
+        /// <summary>
+        /// Gets the personal rank of the current player for a given period.
+        /// </summary>
         public Task<UserRank> GetMyRankAsync(LeaderboardPeriod period)
         {
             string periodString = period.ToString().ToLower();

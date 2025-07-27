@@ -1,4 +1,4 @@
-// In Assets/BigTime-SDK/BigTimeSDK.cs
+// In BigTimeSDK.cs
 using BigTime.SDK.Core;
 using BigTime.SDK.Managers;
 using BigTime.SDK.Utilities;
@@ -7,14 +7,18 @@ namespace BigTime.SDK
 {
     public static class BigTimeSDK
     {
+        // Public-facing managers for the game developer to use
         public static PlayerManager Player { get; private set; }
         public static AvatarManager Avatar { get; private set; }
         public static LeaderboardManager Leaderboard { get; private set; }
+        public static WalletManager Wallet { get; private set; }
+        public static RewardsManager Rewards { get; private set; }
+        public static FriendsManager Friends { get; private set; }
+        public static ReportsManager Reports { get; private set; }
+        public static ScoreManager Score { get; private set; }
 
         private static bool _isInitialized = false;
 
-        /// <param name="accessToken">The player's access token provided by the game hub.</param>
-        /// <param name="refreshToken">The player's refresh token provided by the game hub.</param>
         public static void Initialize(string accessToken, string refreshToken)
         {
             if (_isInitialized)
@@ -32,9 +36,15 @@ namespace BigTime.SDK
 
             var apiClient = new ApiClient(baseUri, authManager);
 
+            // Create and expose all feature managers
             Player = new PlayerManager(apiClient);
             Avatar = new AvatarManager(apiClient);
             Leaderboard = new LeaderboardManager(apiClient);
+            Wallet = new WalletManager(apiClient);
+            Rewards = new RewardsManager(apiClient);
+            Friends = new FriendsManager(apiClient);
+            Reports = new ReportsManager(apiClient);
+            Score = new ScoreManager(apiClient);
 
             _isInitialized = true;
             UnityEngine.Debug.Log("BigTime SDK Initialized Successfully.");
