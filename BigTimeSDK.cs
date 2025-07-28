@@ -49,5 +49,20 @@ namespace BigTime.SDK
             _isInitialized = true;
             UnityEngine.Debug.Log("BigTime SDK Initialized Successfully.");
         }
+
+        /// <summary>
+        /// (OPTIONAL) Configures the SDK to work with your game's custom currency.
+        /// Call this once after Initialize().
+        /// </summary>
+        /// <param name="exchangeRate">How many units of your in-game currency equal 1 BigTime Token.</param>
+        public static void InitializeCurrency(float exchangeRate)
+        {
+            if (!_isInitialized)
+            {
+                UnityEngine.Debug.LogError("BigTime SDK must be initialized before setting the currency exchange rate.");
+                return;
+            }
+            Wallet.SetExchangeRate(exchangeRate);
+        }
     }
 }
